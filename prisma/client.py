@@ -8,7 +8,7 @@ ENDPOINTS = {
 PRISMA_HEADERS = {"Content-Type": "application/json"}
 
 
-class PelotonClient:
+class PrismaClient:
     def __init__():
         pass
 
