@@ -21,7 +21,6 @@ class PrismaClient:
     def create_session(self) -> None:
         self._create_access_token()
         self.session = requests.Session()
-        print(PRISMA_HEADERS)
         self.session.headers = PRISMA_HEADERS
 
     def _create_access_token(self) -> None:
