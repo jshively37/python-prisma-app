@@ -13,3 +13,6 @@ if __name__ == "__main__":
         tsg_id=TSG_ID, client_id=CLIENT_ID, client_secret=CLIENT_SECRET
     )
     client.create_session()
+    # client.add_ssl_decrypt_bypass()
+    client.get_ssl_decrypt_bypass()
+    # client.commit_config()

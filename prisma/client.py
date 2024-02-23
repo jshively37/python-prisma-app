@@ -1,8 +1,15 @@
+import json
 import typing as t
 import requests
 import sys
 
-ENDPOINTS = {}
+BASE_URL = "https://api.sase.paloaltonetworks.com/sse/config/v1/"
+
+ENDPOINTS = {
+    'push_config': 'config-versions/candidate:push',
+    'get_decrpyt': 'decryption-exclusions?folder=Mobile Users',
+    'decrypt_exclusions': 'decryption-exclusions?folder=Mobile Users'
+}
 GRANT_TYPE = "grant_type=client_credentials&scope=tsg_id"
 PRISMA_HEADERS = {"Content-Type": "application/x-www-form-urlencoded"}
 
@@ -43,3 +50,29 @@ class PrismaClient:
 
     def make_request(self) -> t.Dict:
         pass
+
+    def get_ssl_decrypt_bypass(self) -> None:
+        url = BASE_URL + ENDPOINTS['get_decrpyt']
+        print(url)
+        response = requests.get(url=url, headers=PRISMA_HEADERS)
+        print(response.text)
+
+    def add_ssl_decrypt_bypass(self) -> None:
+        payload = {
+            "description": "test bypass",
+            "name": "https://go.boardbooks.com"
+        }
+        print(payload)
+        url = BASE_URL + ENDPOINTS['decrypt_exclusions']
+        print(url)
+        response = requests.post(url=url, headers=PRISMA_HEADERS, data=payload)
+        print(response.text)
+
+    def commit_config(self) -> None:
+        url = BASE_URL + ENDPOINTS['push_config']
+        payload = {
+            'description': 'automated push',
+            'folders': ['Mobile Users']
+        }
+        response = requests.post(url=url, headers=PRISMA_HEADERS, json=payload)
+        print(response.text)
